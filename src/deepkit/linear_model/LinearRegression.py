@@ -151,6 +151,15 @@ class LinearRegression:
         return X @ self._theta 
 
     
+    # ==================================
+    # check numerical stability 
+    # ==================================
+    def _check_numerical_stability(self, value):
+        if not np.all(np.isfinite(value)):
+            raise ValueError(
+                "Training diverged due to numerical instability. "
+                "Try reducing alpha or scaling your features."
+            )
         
     # ===================================
     # Calculate the Gradient 
@@ -207,6 +216,8 @@ class LinearRegression:
             dtheta =  self._gradient(X,y)
             self._theta -= self._alpha * dtheta
 
+            self._check_numerical_stability(self._theta)
+
             cost = self._cost(X,y)
             self.cost_history_.append(cost)
 
@@ -226,7 +237,10 @@ class LinearRegression:
                 y_i = y[i: i+1]
 
                 dtheta = self._gradient(X_i, y_i)
-                self._theta -= self._alpha * dtheta 
+                self._theta -= self._alpha * dtheta
+
+            self._check_numerical_stability(self._theta)
+            
             cost = self._cost(X,y)
             self.cost_history_.append(cost)
 
