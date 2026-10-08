@@ -1,12 +1,34 @@
-import numpy as np 
 class LinearRegression:
     
     # Construction
-    def __init__(self):
+    def __init__(self, solver='normal',alpha=0.01,epochs=200, batch_size=32):
+        # Parameters 
         self._theta = None 
-        
-    # fit function :
-    def fit(self,X,y,method='normal',alpha=0.01, epochs=200,batch=10):
+        self._solver = solver
+        self._alpha =  alpha
+        if self._alpha <= 0:
+            raise ValueError("alpha must be greater than 0.")  
+        self._epochs = epochs
+        if self._epochs <= 0:
+            raise ValueError("epochs must be greater than 0.")
+        self._batch_size = batch_size 
+        # Validate batch
+        if self._batch_size <= 0:
+            raise ValueError(
+                "batch must be greater than 0."
+            )
+        # Model information 
+        self.n_features_in_ = None 
+        self.n_iter_ = None 
+        # Training history
+        self.cost_history_ = []
+
+    # =============================
+    #      Validate the Input    
+    # =============================
+    
+    @staticmethod
+    def _validate_input(X,y):
         
         # converts the feature matrix and target to NumPy array 
         X = np.asarray(X)
@@ -25,58 +47,111 @@ class LinearRegression:
                 "X and y must contain the same number of samples."
             )
             
-         # Validate batch
-        if batch <= 0:
+         
+        return X,y
+        
+    # ===============================================
+    # CHECK FITTED 
+    # ===============================================
+
+    def _check_fitted(self):
+        if self._theta is None:
             raise ValueError(
-                "batch must be greater than 0."
+                "Model must be fitted before"
+                "accessing its parameters."
             )
-        # add the intercept 
-        X = np.c_[np.ones(X.shape[0]),X]
+
+    # ==================================================
+    # FIT FUNCTION 
+    # ==================================================
+    
+    def fit(self,X,y):
+        
+        # Validate and convert inpu 
+        X,y = self._validate_input(X,y)
+
+        # Store number of features before adding incept 
+        self.n_features_in_ =  X.shape[1]
+        
+        # Add the intercept column 
+        X = self._add_intercept(X)
+
+        # reset Training history 
+        self.cost_history_= []
         
         # confirm the optimization method 
-        if method == 'normal' :
+        if self._solver == 'normal' :
             self._normal_equation(X,y)
             
-        elif method == 'gradient':
-            self._gradient_descent(X,y,alpha,epochs,batch)
+        elif self._solver == 'batch':
+            self._batch_gradient_descent(X,y)
+            
+        elif self._solver == 'stochastic':
+            self._stochastic_gradient_descent(X,y)
+
+        elif self._solver == 'mini-batch':
+            self._mini_gradient_descent(X,y)
             
         else : 
             raise ValueError(
                 "Optimization method doesn't exist. "
-                "choose 'normal' or 'gradient'.")
+                "choose 'normal', 'batch', 'stochastic', 'mini-batch' .")
             
             
         return self 
     
-            
+    # ===============================
+    # INITIALIZE THETA 
+    # ===============================
+    def _initialize_theta(self, X):
+        self._theta = np.zeros(X.shape[1])
+
+    # ===============================
+    # ADD INTERCEPT 
+    #================================
+    
+    @staticmethod
+    def _add_intercept(X):
+        return np.c_[np.ones(X.shape[0]),X]
+        
+
+    # ================================
+    # PREDICT FUNCTION 
+    # ================================
         
     def predict(self, X):
         
         # check the fitting 
-        if self._theta is None:
-            raise ValueError("Model must be fitted before prediction.")
+        self._check_fitted()
             
         # converts the feature matrix and target to NumPy array 
         X = np.asarray(X)
         
-        # check the shape
+        # check the shape must be 2D
         if X.ndim != 2 :
             raise ValueError(
                     "X must be a 2D array of shape "
                     "(n_samples, n_features)."
                 )
-
+            
+        # Check number of features
+        if X.shape[1] != self.n_features_in_:
+            raise ValueError(
+                f"X must contain {self.n_features_in_} features, "
+                f"but received {X.shape[1]}."
+            )
+            
         # add the intercept to first column X 
         X = np.c_[np.ones(X.shape[0]),X]
         
         return X @ self._theta 
 
-    def _normal_equation(self, X, y):
+    
         
-        # uses the formula theta = inverse(X.T @ X) @ X.T @ y
-        self._theta = np.linalg.solve(X.T @ X, X.T @ y)
-        
-    # calculate the partial Derivation 
+    # ===================================
+    # Calculate the Gradient 
+    # ===================================
+    
     def _gradient(self,X,y):
         
         # calculate the prediction
@@ -84,28 +159,102 @@ class LinearRegression:
 
         # measure the error 
         error = y_pred - y
+        
         m = len(y)
         
         # calculate the gradient 
         dtheta = (1/m)* (X.T @ error)
         
         return dtheta
+
+    # ===========================================
+    # COST FUNCTION 
+    # ===========================================
+    def _cost(self,X,y):
         
-    # batch Gradient algorithm 
-    def _gradient_descent(self,X,y,alpha,epochs,batch):
+        y_pred = X @ self._theta 
+        error = y_pred - y
+        m = len(y)
+
+        return (1 / (2 * m)) * np.sum(error ** 2)
+
+
+    # ==================================
+    # NORMAL EQUATION 
+    # ==================================
+
+    def _normal_equation(self, X, y):
         
-        self._theta = np.zeros(X.shape[1])
+        # uses the formula theta = (X.T X)^(-1) X.T y
+        # I won't use : np.linalg.solve(X.T @ X, X.T @ y)
+        # I used pinv to prevent singular matrix error when X isn't invertible 
+        self._theta = np.linalg.pinv(X) @ y
+        self.n_iter_ = 1
+
+        
+    # ========================================
+    # BATCH GRADDIENT DESCENT 
+    # =========================================
+    def _batch_gradient_descent(self, X, y):
+        self._initialize_theta(X)
+        
+        for epochs in range(self._epochs):
+            
+            dtheta =  self._gradient(X,y)
+            self._theta -= self._alpha * dtheta
+
+            cost = self._cost(X,y)
+            self.cost_history_.append(cost)
+
+        self.n_iter_ = self._epochs
+             
+    
+    # ===================================================
+    # STOCHASTIC GRADDEINT DESCENT 
+    # ===================================================
+    def _stochastic_gradient_descent(self, X,y):
+        self._initialize_theta(X)
+        m = len(y)
+        for epochs in range(self._epochs):
+            for i in range(m):
+                
+                X_i = X[i:i +1]
+                y_i = y[i: i+1]
+
+                dtheta = self._gradient(X_i, y_i)
+                self._theta -= self._alpha * dtheta 
+            cost = self._cost(X,y)
+            self.cost_history_.append(cost)
+
+        self.n_iter_ = self._epochs
+
+    # ============================================
+    # MINI BATCH GRADIENT ALGORITHM
+    # ============================================
+    
+    def _mini_gradient_descent(self,X,y):
+        
+        self._initialize_theta(X)
         m = y.shape[0]
        
-        for i in range(epochs):
-            for start in range(0, m, batch):
-                end = min(start + batch, m)
+        for i in range(self._epochs):
+            for start in range(0, m, self._batch_size):
+                end = min(start + self._batch_size, m)
                 X_batch = X[start:end]
                 y_batch = y[start:end]
                 dtheta = self._gradient(X_batch,y_batch)
-                self._theta = self._theta - (alpha * dtheta)
-        
-    # measure the performance     
+                self._theta -= self._alpha * dtheta
+            cost =  self._cost(X,y)
+            self.cost_history_.append(cost)
+            
+        self.n_iter_ = self._epochs
+    
+
+                 
+    # =======================================
+    # MEASURE THE MODEL PERFORMANCE 
+    # =======================================
+    
     @staticmethod
     def r2_score(y, y_pred):
         y = np.asarray(y)
@@ -113,13 +262,28 @@ class LinearRegression:
         ss_res = np.sum((y - y_pred) ** 2)
         ss_tot = np.sum((y - np.mean(y)) ** 2)
         return 1 - ss_res / ss_tot
+        
+    # ========================================
+    # INTERCEPT  AND COEFFICIENT 
+    # ========================================
     
-    # return intercept
     @property
     def intercept_(self):
+        self._check_fitted()
         return self._theta[0]
-    # return coefficient
+
+    
     @property
     def coef_(self):
+        self._check_fitted()
         return self._theta[1:]
+
+    # ==================================
+    # PARAMETERS
+    # ==================================
+
+    @property
+    def theta_(self):
+        self._check_fitted()
+        return self._theta.copy()
     

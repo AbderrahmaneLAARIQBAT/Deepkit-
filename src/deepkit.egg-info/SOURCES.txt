@@ -1,0 +1,9 @@
+pyproject.toml
+src/deepkit.egg-info/PKG-INFO
+src/deepkit.egg-info/SOURCES.txt
+src/deepkit.egg-info/dependency_links.txt
+src/deepkit.egg-info/requires.txt
+src/deepkit.egg-info/top_level.txt
+src/deepkit/linear_model/LinearRegression.py
+src/deepkit/linear_model/__init__.py
+src/deepkit/svm/__init__.py
