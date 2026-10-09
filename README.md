@@ -1,4 +1,4 @@
-# DeepKit
+# DeepKit-ml
 
 Hello World! 
 
