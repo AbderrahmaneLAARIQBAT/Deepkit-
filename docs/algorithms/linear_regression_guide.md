@@ -65,9 +65,9 @@ predictions = model.predict(X)
 
 For multiple linear regression, DeepKit models the target as:
 
-\[
-\hat{y} = \theta_0 + \theta_1x_1 + \theta_2x_2 + \cdots + \theta_nx_n
-\]
+$$
+\hat{y} = \theta_0 + \theta_1 x_1 + \theta_2 x_2 + \cdots + \theta_n x_n
+$$
 
 where:
 
