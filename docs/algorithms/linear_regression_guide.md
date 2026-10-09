@@ -71,10 +71,10 @@ $$
 
 where:
 
-- $$\(\hat{y}\)$$ is the predicted value
-- $$\(\theta_0\)$$ is the intercept
-- $$\(\theta_1,\ldots,\theta_n\)$$ are the feature coefficients
-- $$\(x_1,\ldots,x_n\)$$ are the input features
+- $\hat{y}$ is the predicted value
+- $\theta_0$ is the intercept
+- $\theta_1,\ldots,\theta_n$ are the feature coefficients
+- $x_1,\ldots,x_n$ are the input features
 
 Internally, DeepKit adds a column of ones to the feature matrix so the intercept can be learned as part of the parameter vector.
 
@@ -164,11 +164,11 @@ solver="mini-batch"
 
 The Normal Equation provides a closed-form solution:
 
-$$\[
+$$
 \theta = X^+y
-\]$$
+$$
 
-where $$\(X^+\)$$ is the Moore-Penrose pseudoinverse of $$\(X\)$$.
+where $X^+$ is the Moore-Penrose pseudoinverse of $X$.
 
 DeepKit uses:
 
@@ -508,12 +508,12 @@ print("R²:", score)
 
 The coefficient of determination is:
 
-\[
+$$
 R^2 =
 1 -
 \frac{\sum_i(y_i-\hat{y}_i)^2}
 {\sum_i(y_i-\bar{y})^2}
-\]
+$$
 
 A value closer to `1` generally indicates that the predictions explain more of the variance in the target.
 
