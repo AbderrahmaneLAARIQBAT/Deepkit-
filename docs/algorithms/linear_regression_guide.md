@@ -71,10 +71,10 @@ $$
 
 where:
 
-- \(\hat{y}\) is the predicted value
-- \(\theta_0\) is the intercept
-- \(\theta_1,\ldots,\theta_n\) are the feature coefficients
-- \(x_1,\ldots,x_n\) are the input features
+- $$\(\hat{y}\)$$ is the predicted value
+- $$\(\theta_0\)$$ is the intercept
+- $$\(\theta_1,\ldots,\theta_n\)$$ are the feature coefficients
+- $$\(x_1,\ldots,x_n\)$$ are the input features
 
 Internally, DeepKit adds a column of ones to the feature matrix so the intercept can be learned as part of the parameter vector.
 
