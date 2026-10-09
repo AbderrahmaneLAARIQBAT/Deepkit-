@@ -211,9 +211,9 @@ $$
 The gradient is:
 
 $$
-\nabla_\theta J
+\nabla_{\theta} J
 =
-\frac{1}{m}X^T(X\theta-y)
+\frac{1}{m} X^T (X\theta - y)
 $$
 
 The parameters are updated using:
@@ -221,7 +221,7 @@ The parameters are updated using:
 $$
 \theta
 \leftarrow
-\theta-\alpha\nabla_\theta J
+\theta - \alpha \nabla_{\theta} J
 $$
 
 ### Example
