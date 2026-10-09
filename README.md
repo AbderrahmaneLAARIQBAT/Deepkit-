@@ -29,3 +29,7 @@ pip install deepkit-ml
 And that's it! 
 
 This is just the beginning. Let's see how far this project can go.
+
+DeepKit - Machine Learning Library
+Copyright (c) 2026 Your Name
+Licensed under the MIT License.
