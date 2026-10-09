@@ -200,29 +200,29 @@ Batch Gradient Descent calculates the gradient using the entire training dataset
 
 The Mean Squared Error cost used by DeepKit is:
 
-$$
+```math
 J(\theta)
 =
 \frac{1}{2m}
 \sum_{i=1}^{m}
 \left(\hat{y}^{(i)} - y^{(i)}\right)^2
-$$
+```
 
 The gradient is:
 
-$$
+```math
 \nabla_{\theta} J
 =
 \frac{1}{m} X^T (X\theta - y)
-$$
+```
 
 The parameters are updated using:
 
-$$
+```math
 \theta
 \leftarrow
 \theta - \alpha \nabla_{\theta} J
-$$
+```
 
 ### Example
 
