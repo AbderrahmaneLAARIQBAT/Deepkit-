@@ -164,11 +164,11 @@ solver="mini-batch"
 
 The Normal Equation provides a closed-form solution:
 
-\[
+$$\[
 \theta = X^+y
-\]
+\]$$
 
-where \(X^+\) is the Moore-Penrose pseudoinverse of \(X\).
+where $$\(X^+\)$$ is the Moore-Penrose pseudoinverse of $$\(X\)$$.
 
 DeepKit uses:
 
@@ -200,29 +200,29 @@ Batch Gradient Descent calculates the gradient using the entire training dataset
 
 The Mean Squared Error cost used by DeepKit is:
 
-\[
+$$\[
 J(\theta)
 =
 \frac{1}{2m}
 \sum_{i=1}^{m}
 (\hat{y}^{(i)}-y^{(i)})^2
-\]
+\]$$
 
 The gradient is:
 
-\[
+$$\[
 \nabla_\theta J
 =
 \frac{1}{m}X^T(X\theta-y)
-\]
+\]$$
 
 The parameters are updated using:
 
-\[
+$$\[
 \theta
 \leftarrow
 \theta-\alpha\nabla_\theta J
-\]
+\]$$
 
 ### Example
 
