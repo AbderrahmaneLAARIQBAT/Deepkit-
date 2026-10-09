@@ -30,7 +30,7 @@ And that's it!
 
 This is just the beginning. Let's see how far this project can go.
 
-DeepKit - Machine Learning Library
+DeepKit-ml - Machine Learning Library
 
 Copyright (c) 2026 Abderrahmane Laariqbat 
 
