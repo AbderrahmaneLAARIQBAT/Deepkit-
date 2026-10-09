@@ -1,37 +1,75 @@
-# DeepKit-ml
+# 🧠 DeepKit
 
-Hello World! 
+<p align="center">
 
-**DeepKit** is an ambitious project: a complete machine learning library inspired by **scikit-learn**, providing common machine learning algorithms such as **Linear Regression, SVM, KNN, Naive Bayes**, and many more.
+**A machine learning library built from scratch.**
 
-Some of you might ask:
+Learn. Build. Understand.
 
-> **"We already have scikit-learn. Why do we need another library?"**
+[![PyPI](https://img.shields.io/pypi/v/deepkit-ml?style=for-the-badge&logo=pypi&logoColor=white)](https://pypi.org/project/deepkit-ml/)
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
-Honestly, I don't claim that you need it. 
+</p>
 
-DeepKit is first and foremost a personal challenge. I created it to satisfy my curiosity, improve my understanding of **Machine Learning and Deep Learning**, and prove to students like me that you can build something useful if you are willing to take the first step.
+---
 
-Building a machine learning library from scratch forces me to understand what is happening **behind the scenes**, rather than simply using pre-built implementations.
+## 🚀 About DeepKit
 
-The project is still in its **early stages**, but I plan to keep developing it and adding more algorithms, features, and improvements over time.
+**DeepKit** is an ambitious open-source machine learning library inspired by
+[scikit-learn](https://scikit-learn.org/).
 
-DeepKit is **open source**, so feel free to explore the source code, examine how the algorithms are implemented, and learn from it.
+The goal is simple:
 
-## Installation
+> **Understand what happens behind the algorithms instead of treating them as black boxes.**
 
-To install DeepKit, simply run:
+DeepKit is being developed as both a practical machine learning library and a learning project.
+
+It is my attempt to build something useful from scratch while improving my understanding of **Machine Learning, Deep Learning, mathematics, and software engineering**.
+
+---
+
+## 🤔 Why DeepKit?
+
+You might be wondering:
+
+> "We already have scikit-learn. Why build another ML library?"
+
+Honestly, you probably don't need another one. 😄
+
+That's not really the point.
+
+DeepKit started as a personal challenge:
+
+- 🧠 Understand ML algorithms deeply
+- 🔢 Implement the mathematics behind them
+- 🛠️ Improve my Python skills
+- 📚 Learn how real ML libraries are structured
+- 🚀 Build something that can grow over time
+
+And most importantly:
+
+> **You don't need to be an expert to start building something. You just need to take the first step.**
+
+---
+
+## ✨ Features
+
+DeepKit is still in its early stages, but the goal is to provide implementations of common machine learning algorithms.
+
+### Currently
+
+- 📈 Linear Regression
+- 🔍 Support Vector Machines
+- 👥 K-Nearest Neighbors
+- 🎲 Naive Bayes
+- 🚧 More algorithms coming soon...
+
+---
+
+## 📦 Installation
+
+Install DeepKit directly from PyPI:
 
 ```bash
 pip install deepkit-ml
-```
-
-And that's it! 
-
-This is just the beginning. Let's see how far this project can go.
-
-DeepKit-ml - Machine Learning Library
-
-Copyright (c) 2026 Abderrahmane Laariqbat 
-
-Licensed under the MIT License.
